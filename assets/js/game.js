@@ -8,12 +8,13 @@ var player_money = 10;
 console.log(player_name, player_attack, player_health);
 
 // create enemy robot
-var enemy_name = "Roborto";
+var enemy_names = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemy_health = 50;
 var enemy_attack = 12;
+console.log(enemy_names);
 
 //initiate fight
-var fight = function()
+var fight = function(enemy_name)
 {
     window.alert("Welcome to Robot Gladiators!");
     var prompt_fight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose. ");
@@ -75,4 +76,7 @@ var fight = function()
     }
 };
 
-fight();
+for(var i = 0; i < enemy_names.length; i++)
+{
+    fight(enemy_names[i]);
+}
