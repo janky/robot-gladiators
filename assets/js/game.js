@@ -31,15 +31,16 @@ var fight = function(enemy_name)
             if(confirm_skip)
             {
                 window.alert(player_name + " has chosen to skip the fight. Goodbye!");
-                player_money = player_money - 10;
+                player_money = Math.max(0, player_money - 10);
                 console.log("player_money", player_money);
                 break;
             }
         }
 
         //if player chooses to fight, then fight
-        //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
-        enemy_health = enemy_health - player_attack;
+        //generate random damage value based on player's attack power
+        var damage = random_number(player_attack - 3, player_attack);
+        enemy_health = Math.max(0, enemy_health - damage);
 
         // Log a resulting message to the console so we know that it worked.
         console.log(player_name + " attacked " + enemy_name + ". " + enemy_name + " now has " + enemy_health + " health remaining.");
@@ -55,8 +56,9 @@ var fight = function(enemy_name)
             window.alert(enemy_name + " still has " + enemy_health + " health left.");
         }
 
-        // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
-        player_health = player_health - enemy_attack;
+        // generate random damage value based on enemy's attack power
+        var damage = random_number(enemy_attack - 3, enemy_attack);
+        player_health = Math.max(0, player_health - damage);
 
         // Log a resulting message to the console so we know that it worked.
         console.log(enemy_name + " attacked " + player_name + ". " + player_name + " now has " + player_health + " health remaining.");
@@ -90,7 +92,7 @@ var start_game = function()
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
         
             var picked_enemy_name = enemy_names[i];
-            enemy_health = 50;
+            enemy_health = random_number(40,60);
             fight(picked_enemy_name);
 
             //if we're not at the last enemy in the array
@@ -197,5 +199,13 @@ var shop = function()
             break;
     }
 };
+
+// random number function
+var random_number = function(min, max)
+{
+    var value = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    return value;
+}
 
 start_game();
