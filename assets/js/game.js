@@ -169,10 +169,23 @@ var random_number = function(min, max)
     return value;
 };
 
+//function to set name
+var get_player_name = function()
+{
+    var name = "";
+    //loop with prompt and condition
+    while (name === "" || name === null)
+    {
+        name = prompt("What is your robot's name?");
+    }
+    console.log("Your robot's name is " + name);
+    return name;
+};
+
 //create your robot
 var player_info = 
 {
-    name: window.prompt("What is your robot's name?"),
+    name: get_player_name(),
     health: 100,
     attack: 10,
     money:10,
