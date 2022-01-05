@@ -31,52 +31,66 @@ var fight_or_skip = function()
 //initiate fight
 var fight = function(enemy)
 {
+    // keep track of who goes first
+    var isPlayerTurn = true;
+    if (Math.random() > 0.5)
+    {
+        isPlayerTurn = false;
+    }
     // go through round of fighting
     while(player_info.health > 0 && enemy.health > 0)
     {
-        //fight or skip prompt
-        if (fight_or_skip())
+        if (isPlayerTurn)
         {
-            break;
-        }
-
-        //if player chooses to fight, then fight
-        //generate random damage value based on player's attack power
-        var damage = random_number(player_info.attack - 3, player_info.attack);
-        enemy.health = Math.max(0, enemy.health - damage);
-
-        // Log a resulting message to the console so we know that it worked.
-        console.log(player_info.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining.");
-
-        //check enemy's health
-        if (enemy.health <= 0)
-        {
-            window.alert(enemy.name + " has died.");
-            break;
-        }
-        else 
-        {                
-            window.alert(enemy.name + " still has " + enemy.health + " health left.");
-        }
-
-        // generate random damage value based on enemy's attack power
-        var damage = random_number(enemy.attack - 3, enemy.attack);
-        player_info.health = Math.max(0, player_info.health - damage);
-
-        // Log a resulting message to the console so we know that it worked.
-        console.log(enemy.name + " attacked " + player_info.name + ". " + player_info.name + " now has " + player_info.health + " health remaining.");
-
-        // check player's health
-        if (player_info.health <= 0) 
-        {
-            window.alert(player_info.name + " has died!");
-            break;
-        } 
-        else 
-        {
-            window.alert(player_info.name + " still has " + player_info.health + " health left.");
-        }
+            //fight or skip prompt
+            if (fight_or_skip())
+            {
+                break;
+            }
         
+            //if player chooses to fight, then fight
+            //generate random damage value based on player's attack power
+            var damage = random_number(player_info.attack - 3, player_info.attack);
+            enemy.health = Math.max(0, enemy.health - damage);
+
+            // Log a resulting message to the console so we know that it worked.
+            console.log(player_info.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining.");
+
+            //check enemy's health
+            if (enemy.health <= 0)
+            {
+                window.alert(enemy.name + " has died.");
+                //award player money for winning
+                player_info.money = player_info.money + 20;
+                break;
+            }
+            else 
+            {                
+                window.alert(enemy.name + " still has " + enemy.health + " health left.");
+            }
+        }
+        else
+        {
+            // generate random damage value based on enemy's attack power
+            var damage = random_number(enemy.attack - 3, enemy.attack);
+            player_info.health = Math.max(0, player_info.health - damage);
+
+            // Log a resulting message to the console so we know that it worked.
+            console.log(enemy.name + " attacked " + player_info.name + ". " + player_info.name + " now has " + player_info.health + " health remaining.");
+
+            // check player's health
+            if (player_info.health <= 0) 
+            {
+                window.alert(player_info.name + " has died!");
+                break;
+            } 
+            else 
+            {
+                window.alert(player_info.name + " still has " + player_info.health + " health left.");
+            }
+        }
+        //switch trun over for next round
+        isPlayerTurn = !isPlayerTurn;
     }
 };
 
