@@ -1,25 +1,43 @@
+var fight_or_skip = function()
+{
+    //prompt player to either fight or skip the round
+    var prompt_fight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose. ");
+    prompt_fight = prompt_fight.toLowerCase();
+
+    if (prompt_fight === "" || prompt_fight === null)
+    {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fight_or_skip();
+    }
+
+    //if player chooses to skip
+    if (prompt_fight === "skip")
+    {
+        // confirm player wants to skip
+        var confirm_skip = window.confirm("Are you sure you'd like to quit?")
+    
+        if(confirm_skip)
+        {
+            window.alert(player_info.name + " has chosen to skip the fight. Goodbye!");
+            player_info.money = Math.max(0, player_info.money - 10);
+            console.log("player_info.money", player_info.money);
+            return true;
+        }
+    }
+
+    return false;
+}
+
 //initiate fight
 var fight = function(enemy)
 {
     // go through round of fighting
     while(player_info.health > 0 && enemy.health > 0)
     {
-        //prompt player to either fight or skip the round
-        var prompt_fight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose. ");
-
-        //if player chooses to skip
-        if (prompt_fight === "skip" || prompt_fight === "SKIP")
+        //fight or skip prompt
+        if (fight_or_skip())
         {
-            // confirm player wants to skip
-            var confirm_skip = window.confirm("Are you sure you'd like to quit?")
-
-            if(confirm_skip)
-            {
-                window.alert(player_info.name + " has chosen to skip the fight. Goodbye!");
-                player_info.money = Math.max(0, player_info.money - 10);
-                console.log("player_info.money", player_info.money);
-                break;
-            }
+            break;
         }
 
         //if player chooses to fight, then fight
@@ -133,22 +151,21 @@ var end_game = function()
 var shop = function()
 {
     //ask player what they would like to do 
-    var shop_option_prompt = window.prompt("Would you like to REFILL you health, UPGRADE your attack, or LEAVE the store? Please enter 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+    var shop_option_prompt = window.prompt("Would you like to REFILL you health, UPGRADE your attack, or LEAVE the store? Please enter 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE.");
+
+    shop_option_prompt = parseInt(shop_option_prompt);
 
     switch (shop_option_prompt)
-    {
-        case "REFILL": 
-        case "refill": 
+    { 
+        case 1: 
             player_info.refill_health();
             break;
 
-        case "UPGRADE":
-        case "upgrade":
+        case 2:
             player_info.upgrade_attack();
             break;
 
-        case "LEAVE":
-        case "leave":
+        case 3:
             window.alert("Leaving the store.");
             //do nothing, so function will end
             break;
